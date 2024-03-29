@@ -53,18 +53,8 @@ print(menu)
 
 # 1. Set up order list. Order list will store a list of dictionaries for
 # menu item name, item price, and quantity ordered
-order_list = [
-  {
-    "Item name": "string",
-    "Price": float,
-    "Quantity": int
-  },
-  {
-    "Item name": "string",
-    "Price": float,
-    "Quantity": int
-  },
-]
+order_list = []
+
 
 # Launch the store and present a greeting to the customer
 print("Welcome to the variety food truck.")
@@ -132,74 +122,80 @@ while place_order:
             # 2. Ask customer to input menu item number
             # 3. Check if the customer typed a number
             # Convert the menu selection to an integer -This needs to be updated
-        while True:
-            option1 = int(input("Type item number: "))
-            break
+        menu_selection = (input("Type item number: "))
+        if menu_selection.isdigit():
+            menu_selection = int(menu_selection)
+               # Check if the customer's input is a valid option
+            if menu_selection in menu_items.keys():
+            # Save the menu category name to a variable - - -  this line still needs work
+                menu_selection_name = menu_items[menu_selection]["Item name"]
+            # Print out the menu category name they selected
+                print(f"You selected {menu_selection_name}")
+            else: print("Selection is not a valid option")
+              
         else:
-            print("Invalid input, please enter a number")         
+              print("You did not select an valid number")  
         
                 
 
-                # 4. Check if the menu selection is in the menu items
-                # Store the item name as a variable - the line below still needs to be updated/checked
+                # 4. Check if the menu selection is in the menu items - completed above
+                # Store the item name as a variable - completed above
+              
                 # Ask the customer for the quantity of the menu item
                 # Check if the quantity is a number, default to 1 if not
                 # Tell the customer that their input isn't valid
                 # Tell the customer they didn't select a menu option
-                # Add the item name, price, and quantity to the order list still needs to be updated
+        quantity = input(f"How many {menu_selection_name} s would you like? If a valid number is not provide the quantity will be set to 1.  ")             
+        
+        if quantity.isdigit():
+                    print(quantity + " is a number")
+        else:
+            item_quantity = 1
+
+                # Add the item name, price, and quantity to the order list - -  still needs to be updated
                 # Tell the customer they didn't select a menu option
                 # Tell the customer they didn't select a number
-                # Ask the customer if they would like to order anything else
-
-        if int(option1) in menu_category_name.keys():
-                    
-                     menu_item_num = menu_items[int(menu_category_name)]
-
-                    
-        item_quantity = int(input("How many of this item would you like?"))
-
-                    
-        
-        if type(item_quantity) is int:
-                    print(item_quantity + "is a number")
-        else:
-                    item_quantity = 1
-                    
-        order_list["menu_item"].append("Guru")
-        order_list["item_price"].append("Mumbai")
-        order_list["qty_ordered"].append(30)            
-
-
+                # Ask the customer if they would like to order anything else                  
             
-        print(f"{menu_category} was not a menu option.")
-    else:
+            order_list.append({
+                 'Item name': menu_selection_name,
+                'Price': menu_items[menu_selection]['Price'],
+                'Quantity': quantity
+                    }) 
         
-        print("You didn't select a number.")
 
     while True:
         
         keep_ordering = input("Would you like to keep ordering? (Y)es or (N)o ")
 
-        # 5. Check the customer's input
-
+            # Check the customer's input
+        match keep_ordering.lower():
+            # Customer chose yes
+            case 'y':
                 # Keep ordering
-
+                place_order = True
                 # Exit the keep ordering question loop
-
+                break
+            # Customer chose no
+            case 'n':
+                # Complete the order
+                place_order = False
+                # Since the customer decided to stop ordering, thank them for their order
+                print("Thank you for your order.")
+                # Exit the keep ordering question loop
+                break
+        # 5. Check the customer's input
+                # Keep ordering - see above
+                # Exit the keep ordering question loop - see above
                 # Complete the order
 
                 # Since the customer decided to stop ordering, thank them for
-                # their order
-
-                # Exit the keep ordering question loop
-
-
-                # Tell the customer to try again
-
+                # their order -see above
 
 # Print out the customer's order
 print("This is what we are preparing for you.\n")
 
+# Everything here down was just cut and paste from other area to use as a sample and adjust, but I ran out of time
 # Uncomment the following line to check the structure of the order
 #print(order)
 
@@ -214,7 +210,7 @@ print("--------------------------|--------|----------")
     # 10. Print the item name, price, and quantity
 
 
-for key, value in menu[menu_category_name].items():
+for key, value in order_list[menu_selection_name].items():
                 # Check if the menu item is a dictionary to handle differently
                 if type(value) is dict:
                     for key2, value2 in value.items():
@@ -243,4 +239,3 @@ for key, value in menu[menu_category_name].items():
 # Create a loop where a equation multiplying item cost by quantity is applied
 # to each line (item) in the order list
 # add the results of the loop together to generate order total
-Order_Total = ()
